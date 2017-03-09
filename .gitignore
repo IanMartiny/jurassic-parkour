@@ -1,5 +1,6 @@
 *~
-*.swp # vim for life
+*.swp
 *.aux
 *.log
 *.pdf
+*.pyc
