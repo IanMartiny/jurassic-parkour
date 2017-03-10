@@ -6,15 +6,15 @@ Notes for reinforcement learning: [lectures](https://github.com/chrisketelsen/co
 
 # Setup
 
-## Flask setup
-
 This project currently uses a local server to compute the weights used to determine when our dinosaur should jump.
 
 You can see Flask's guide to installing [here](http://flask.pocoo.org/docs/0.12/installation/#installation).
 
+## Virtual environment setup
+
 The basic steps are to install a virtual environment (for a Linux environment):
 
-`$ sudo pip install virutalenv`
+`$ sudo pip install virtualenv`
 
 Then create the virtual environment:
 
@@ -27,6 +27,16 @@ Now activate the virtual environment:
 At any point you can leave the virtual environment with:
 
 `$ deactivate`
+
+## Flask setup
+
+While in the virtual environment install Flask with:
+
+`pip install Flask`
+
+Possibly you may need to use:
+
+`sudo pip install Flask`
 
 ## Run local server
 
