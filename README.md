@@ -10,6 +10,8 @@ This project currently uses a local server to compute the weights used to determ
 
 You can see Flask's guide to installing [here](http://flask.pocoo.org/docs/0.12/installation/#installation).
 
+This setup is necessary only once, after `virtualenv` and `Flask` are installed a user can simply enter their virtual environment and start a server.
+
 ## Virtual environment setup
 
 The basic steps are to install a virtual environment (for a Linux environment):
@@ -38,7 +40,7 @@ Possibly you may need to use:
 
 `sudo pip install Flask`
 
-## Run local server
+# Run local server
 
 While in the virtual environment the server can be started as:
 
