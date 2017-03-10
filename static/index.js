@@ -17,6 +17,9 @@
             return Runner.instance_;
         }
         Runner.instance_ = this;
+        
+        // threshold for jumping, initially set to 1, never jump.
+        this.jumpThresh = 1;
 
         this.outerContainerEl = document.querySelector(outerContainerId);
         this.containerEl = null;
@@ -524,11 +527,11 @@
 
             if (this.playing) {
                 // MODIFY HERE TO MAKE JUMP/DUCK
-                //if (Math.random()*10 >= 9.9){
-                    //console.log("triggered");
-                    //this.tRex.startJump(this.currentSpeed);
-                    ////this.tRex.setDuck(true);
-                //}
+                if (Math.random() >= this.jumpThresh){
+                    console.log("triggered");
+                    this.tRex.startJump(this.currentSpeed);
+                    //this.tRex.setDuck(true);
+                }
 
                 this.clearCanvas();
 
@@ -798,6 +801,13 @@
 
             // Reset the time clock.
             this.time = getTimeStamp();
+            console.log("ded");
+            var t = this
+            $.get("/randomThresh/", function(data,status){
+                t.jumpThresh = parseFloat(data.thresh);
+                sleep(2000);
+                t.restart();
+            });
         },
 
         stop: function () {
@@ -2709,6 +2719,12 @@
     };
 })();
 
+
+function sleep(miliseconds) {
+   var currentTime = new Date().getTime();
+   while (currentTime + miliseconds >= new Date().getTime()) {
+   }
+}
 
 function onDocumentLoad() {
     new Runner('.interstitial-wrapper');

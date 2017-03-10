@@ -1,4 +1,5 @@
-from flask import Flask
+import random
+from flask import Flask, jsonify
 app = Flask(__name__)
 
 @app.route('/')
@@ -12,6 +13,10 @@ def js():
 @app.route('/index.css')
 def css():
     return app.send_static_file("./index.css")
+
+@app.route('/randomThresh/')
+def randThresh():
+    return jsonify({'thresh': random.random()})
 
 @app.route('/assets/<path:path>')
 def sendAssets(path):
