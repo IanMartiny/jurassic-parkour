@@ -34,11 +34,11 @@ At any point you can leave the virtual environment with:
 
 While in the virtual environment install Flask with:
 
-`pip install Flask`
+`(venv) $ pip install Flask`
 
 Possibly you may need to use:
 
-`sudo pip install Flask`
+`(venv) $ sudo pip install Flask`
 
 # Run local server
 
