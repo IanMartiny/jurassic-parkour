@@ -19,7 +19,9 @@
         Runner.instance_ = this;
         
         // threshold for jumping, initially set to 1, never jump.
-        this.jumpThresh = 1;
+        this.jumpThresh = 0.5;
+        // updateCount
+        this.updateCount = 0;
 
         this.outerContainerEl = document.querySelector(outerContainerId);
         this.containerEl = null;
@@ -527,10 +529,21 @@
 
             if (this.playing) {
                 // MODIFY HERE TO MAKE JUMP/DUCK
-                if (Math.random() >= this.jumpThresh){
-                    console.log("triggered");
-                    this.tRex.startJump(this.currentSpeed);
-                    //this.tRex.setDuck(true);
+                this.updateCount++;
+                if (this.updateCount % 50 == 0){
+                    try{
+                        console.log("closest object = " + this.horizon.obstacles[0].xPos);
+                    }
+                    catch(e){
+                        console.log("no objects");
+                    }
+                    if (Math.random() >= this.jumpThresh){
+                        this.tRex.startJump(this.currentSpeed);
+                        //console.log("curr thresh = " + this.jumpThresh);
+                        //console.log("my position = " + this.tRex.xPos);
+                        //this.tRex.setDuck(true);
+                    }
+                    this.updateCount = 0;
                 }
 
                 this.clearCanvas();
@@ -802,12 +815,33 @@
             // Reset the time clock.
             this.time = getTimeStamp();
             console.log("ded");
-            var t = this
-            $.get("/randomThresh/", function(data,status){
-                t.jumpThresh = parseFloat(data.thresh);
+            console.log("distance = " + this.distanceRan);
+            var t = this;
+            var data = {model: model};
+            if (model === "increase") {
+                data.distance = this. distanceRan;
+                data.thresh = this.jumpThresh;
+            }
+            console.log("data = ");
+            console.log(data);
+            $.post("/updateThresh/", data, function(dat, status){
+                t.jumpThresh = parseFloat(dat.thresh)
+                console.log("new threshold = " + t.jumpThresh)
                 sleep(2000);
                 t.restart();
             });
+            //$.get("/randomThresh/", function(data,status){
+                //t.jumpThresh = parseFloat(data.thresh);
+                //sleep(2000);
+                //t.restart();
+            //});
+
+            //$.post("/incrementThresh/", {data: this.distanceRan, thresh: this.jumpThresh}, function(data, status){
+                //t.jumpThresh = parseFloat(data.thresh);
+                //console.log("new thresh = " + t.jumpThresh);
+                //sleep(2000);
+                //t.restart();
+            //});
         },
 
         stop: function () {
@@ -2730,4 +2764,30 @@ function onDocumentLoad() {
     new Runner('.interstitial-wrapper');
 }
 
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function changeModel(clickedId){
+    model = clickedId;
+}
+
+var model = "random";
 document.addEventListener('DOMContentLoaded', onDocumentLoad);
