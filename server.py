@@ -20,14 +20,12 @@ def updateThresh():
     if model == "random":
         return randThresh()
     elif model == "increase":
-        return incrementThresh(float(request.form["distance"]), float(request.form["thresh"]))
+        return increaseThresh(float(request.form["distance"]), float(request.form["thresh"]))
 
-# @app.route('/randomThresh/')
 def randThresh():
     return jsonify({'thresh': random.random()})
 
-# @app.route('/incrementThresh/', methods=["POST"])
-def incrementThresh(score, thresh):
+def increaseThresh(score, thresh):
     if 1000 <= score <= 2000:
         return jsonify({'thresh': thresh + (1-thresh)/10})
     elif 2001 <= score <= 4000:
