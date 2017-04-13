@@ -1,0 +1,75 @@
+\documentclass{scrartcl}
+\usepackage[margin=1in]{geometry}
+
+\title{Jurassic Parkour}
+\subtitle{Reinforcement Learning in an HTML5 Browser Game}
+\author{Sebastian Laudenschlager, Ian Martiny}
+
+\begin{document}
+\maketitle
+
+\section{The data}
+
+Our data is unusual in that we do not have a corpus of data, but rather it is
+``generated'' by the playing of the Chrome T-rex game. Additionally, given that
+we are investigating reinforcement learning we do not utilize much information
+from the game. We only inspect a final score.
+
+The game in and of itself gives the player a score based on the ``distance''
+that the T-rex runs. While our goal is to maximize the distance that the T-rex
+runs we wish to impose additional constraints. Namely, we want our model to
+learn that there are ``correct'' times (distances) to jump and that the T-rex 
+should not be constantly jumping. In order to meet these goals we modify the
+score given by the game to reduce points based on extraneous jumps (more than
+necessary to clear an obstacle) and award points for jumping within an
+acceptable distance from an obstacle and deduct points for jumping outside that
+range.
+
+\section{Baselines}
+
+Our approach has two baselines: choosing a random threshold for the T-rex to
+jump, independent of score, and starting with a low threshold for the T-rex to
+jump and slowly increasing it based on score.
+
+Both models required us to adapt the Javascript for the T-rex game to
+communicate with a locally hosted Python server (Flask). The Javascript was
+modified to check, at every 100th update, a random value against a threshold
+that was computed by the Python server in between runs.
+
+We found that checking the random value against the threshold at every update
+caused the T-rex to be constantly jumping (even with a very high threshold), due
+to the T-rex ``updating'' extremely often. 
+
+The Javascript ``updates'' the game for every object draw and distance moved.
+
+\subsection{Random jumping}
+For the random jumping baseline a random threshold (\texttt{double} between 0
+and 1) is computed by the Python server and sent to the Javascript client. The
+client then begins a new game, and during every 100th update the client computes
+its own random \texttt{double} between 0 and 1. The client then compares these
+values, if the client's value is larger, the T-rex jumps, otherwise nothing
+happens. Once the T-rex dies (by hitting an object) the client sends the score
+(distance run) to the server. The server then ignores this data and computes a
+new random threshold, which it sends to the client, the process then repeats.
+
+\subsection{Increasing Threshold}
+Our second baseline is to steadily increase the threshold for the T-rex to jump.
+The idea is that being more discerning about when to jump will benefit the
+T-rex. The increase in threshold works as follows:
+\begin{itemize}
+  \item If the reported score is between 1000 and 2000 (inclusive) then the new
+    threshold is increased by a tenth of the distance from 1. These are
+    considered low scores. A score less than 1000 is not possible. This allows
+    the threshold to increase by a significant amount, without going above 1.
+  \item If the reported score is between 2001 and 4000 (inclusive) then the new
+    threshold is increased by a fiftieth of the distance from 1. These are still
+    relatively bad scores, but realistically the best we can hope for with
+    purely random jumping. For this model these scores are considered good
+    enough to not change much.
+  \item If the reported score is anything higher the threshold is increased by a
+    hundredth of the distance from 1. Any score above 4000 is considered very
+    good for this model and thus the threshold should not change very much.
+\end{itemize}
+
+
+\end{document}
