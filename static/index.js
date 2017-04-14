@@ -818,8 +818,8 @@
             console.log("distance = " + this.distanceRan);
             var t = this;
             var data = {model: model};
+            data.distance = this.distanceRan;
             if (model === "increase") {
-                data.distance = this. distanceRan;
                 data.thresh = this.jumpThresh;
             }
             console.log("data = ");
@@ -828,6 +828,10 @@
                 t.jumpThresh = parseFloat(dat.thresh)
                 console.log("new threshold = " + t.jumpThresh)
                 sleep(2000);
+                var runCountID = document.getElementById("runCount");
+                var runs = runCountID.innerHTML;
+                runs++;
+                runCountID.innerHTML = runs;
                 t.restart();
             });
             //$.get("/randomThresh/", function(data,status){
@@ -2787,6 +2791,8 @@ window.onclick = function(event) {
 
 function changeModel(clickedId){
     model = clickedId;
+    var modelID = document.getElementById("model");
+    modelID.innerHTML = "Model: " + model;
 }
 
 var model = "random";
