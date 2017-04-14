@@ -38,9 +38,7 @@ that was computed by the Python server in between runs.
 
 We found that checking the random value against the threshold at every update
 caused the T-rex to be constantly jumping (even with a very high threshold), due
-to the T-rex ``updating'' extremely often. 
-
-The Javascript ``updates'' the game for every object draw and distance moved.
+to the T-rex ``updating'' extremely often; the Javascript ``updates'' the game for every object draw and distance moved.
 
 \subsection{Random jumping}
 For the random jumping baseline a random threshold (\texttt{double} between 0
@@ -51,6 +49,9 @@ values, if the client's value is larger, the T-rex jumps, otherwise nothing
 happens. Once the T-rex dies (by hitting an object) the client sends the score
 (distance run) to the server. The server then ignores this data and computes a
 new random threshold, which it sends to the client, the process then repeats.
+
+After recording the scores for 100 runs we found that the average score was
+1850.045, this corresponds to slightly better than not jumping at all.
 
 \subsection{Increasing Threshold}
 Our second baseline is to steadily increase the threshold for the T-rex to jump.
@@ -70,6 +71,11 @@ T-rex. The increase in threshold works as follows:
     hundredth of the distance from 1. Any score above 4000 is considered very
     good for this model and thus the threshold should not change very much.
 \end{itemize}
+
+After recording the scores for 100 runs we found that the average score was
+1699.568, this corresponds to essentially not jumping at all. Due to the
+threshold always increasing, eventually the threshold is so large the T-rex
+never jumps.
 
 
 \end{document}
