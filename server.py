@@ -14,6 +14,17 @@ def js():
 def css():
     return app.send_static_file("./index.css")
 
+@app.route('/saveData/', methods=["POST"])
+def saveData():
+    trial = request.form["trial"]
+    avg = request.form["avg"]
+    eps = request.form["eps"]
+    f = open("averageSuccessfulJumpsPerRun", "a+")
+    f.write(str(trial) + "\t" + str(avg) + "\t" + str(eps) + "\n")
+    f.close();
+
+    return jsonify({})
+
 @app.route('/updateThresh/', methods=["POST"])
 def updateThresh():
     model = request.form["model"]
