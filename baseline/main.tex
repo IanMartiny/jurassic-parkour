@@ -18,11 +18,11 @@ from the game. We only inspect a final score.
 The game in and of itself gives the player a score based on the ``distance''
 that the T-rex runs. While our goal is to maximize the distance that the T-rex
 runs we wish to impose additional constraints. Namely, we want our model to
-learn that there are ``correct'' times (distances) to jump and that the T-rex 
+learn that there are ``correct'' times (distances) to jump and that the T-rex
 should not be constantly jumping. In order to meet these goals we modify the
 score given by the game to reduce points based on extraneous jumps (more than
 necessary to clear an obstacle) and award points for jumping within an
-acceptable distance from an obstacle and deduct points for jumping outside that
+acceptable distance from an obstacle and deduct points for jumping outside of that
 range.
 
 \section{Baselines}
@@ -74,7 +74,7 @@ T-rex. The increase in threshold works as follows:
 
 After recording the scores for 100 runs we found that the average score was
 1699.568, this corresponds to essentially not jumping at all. Due to the
-threshold always increasing, eventually the threshold is so large the T-rex
+threshold always increasing, eventually the threshold is so large that the T-rex
 never jumps.
 
 

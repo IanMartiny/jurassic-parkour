@@ -3,7 +3,7 @@ LATEXMK=latexmk
 
 MAIN=main
 TEXS := $(shell find . -name '*.tex')
-TITLE=proposal
+TITLE=baseline
 
 all: build
 
