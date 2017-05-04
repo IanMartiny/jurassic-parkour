@@ -4,3 +4,6 @@
 *.log
 *.pdf
 *.pyc
+*.bbl
+*.blg
+*.dvi
