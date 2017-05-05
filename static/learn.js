@@ -2,7 +2,7 @@ var game = window.dinoGame;
 var player = new Player();
 var experimentNum = 5;
 $.get("/expNum/", function(data){
-    experimentNum = int(data.expNumber);
+    experimentNum = parseInt(data.expNumber);
     console.log("experimentNum = " + experimentNum);
 });
 
