@@ -1,6 +1,10 @@
 var game = window.dinoGame;
 var player = new Player();
 var experimentNum = 5;
+$.get("/expNum/", function(data){
+    experimentNum = data;
+    console.log("experimentNum = " + experimentNum);
+});
 
 // create an environment object
 var env = {};
@@ -43,7 +47,7 @@ function resetExperiment(){
   env.getNumStates = function() { return 4; }
   env.getMaxNumActions = function() { return 3; }
 
-  spec =  {alpha: experimentValues.alpha, experience_size: 100, epsilon: 0.20, 
+  spec =  {alpha: experimentValues.alpha, experience_size: 100, epsilon: 1.00, 
     num_hidden_units: 1000};
   agent = new RL.DQNAgent(env, spec);
 }
@@ -109,7 +113,6 @@ setInterval(function(){
         eps:agent.epsilon, alpha:experimentValues.alpha, 
         jumpPen:experimentValues.jumpPen, idleRew: experimentValues.idleRew,
         successRew:experimentValues.successRew, diePen:experimentValues.diePen};
-      // var data = {trial:trial, avg:avg, eps:agent.epsilon};
       $.post("/saveData/", data, function(dat, status){
           console.log("data saved");
       });

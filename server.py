@@ -2,6 +2,7 @@ import random
 import os
 from flask import Flask, jsonify, request
 application = Flask(__name__)
+expNumber = 6
 
 @application.route('/')
 def webpage():
@@ -71,6 +72,11 @@ def sendAssets(path):
 @application.route('/static/<path:path>')
 def sendStatic(path):
     return application.send_static_file("./" + str(path))
+
+@application.route('/expNum/')
+def getExpNum():
+    expNumber += 1
+    return expNumber
 
 if __name__== "__main__":
 	application.run(host="0.0.0.0", port="8000")
