@@ -75,8 +75,13 @@ def sendStatic(path):
 
 @application.route('/expNum/')
 def getExpNum():
-    expNumber += 1
-    return expNumber
+    f = open("expNumber", "r")
+    expNumber = int(f.read())
+    f.close()
+    f.open("expNumber", "w")
+    f.write(str(expNumber + 1))
+    f.close()
+    return jsonify({'expNumber': expNumber})
 
 if __name__== "__main__":
 	application.run(host="0.0.0.0", port="8000")
