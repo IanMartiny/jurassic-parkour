@@ -133,15 +133,6 @@ directly.
     Deep Q-Learning then further expands our parameter space, as we need to
     consider parameters such as the number of neurons in the hidden layer.
 
-    The rewards / penalties were assigned such that successfully jumping over an
-    obstacle was heavily rewarded (e.g. reward of +50), ``dying'' was heavily
-    penalized (e.g. penalty of -25), and being idle was very lightly rewarded
-    (e.g. reward of +3). The intention behind this set of rewards and penalties
-    was to avoid obstacles by jumping over them, and to do so without constantly
-    jumping. Furthermore, we experimented with several combinations of these
-    values to attempt to improve the rate of learning, the results of which are
-    discussed in the next section.
-
     Originally the rewards/penalties were assigned such that successfully
     jumping over an obstacle was heavily rewarded (e.g. reward of +50),
     ``dying'' was heavily penalized (e.g. penalty of -25), and being idle was
