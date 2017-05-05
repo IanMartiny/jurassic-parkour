@@ -8,7 +8,7 @@ env.getNumStates = function() { return 4; }
 env.getMaxNumActions = function() { return 3; }
 
 // create the DQN agent
-var spec = { alpha: 0.005, experience_size: 100, epsilon: 0.20, num_hidden_units: 1000}
+var spec = {alpha: 0.005, experience_size: 100, epsilon: 1.0, num_hidden_units: 1000}
 var agent = new RL.DQNAgent(env, spec);
 
 // Variables for graph
@@ -17,7 +17,7 @@ var trialsSinceLastAvg = 0;
 var trial = 0;
 var jumped = false;
 
-var experimentValues = {alpha: 0.005, jumpPen: -10, idleRew: 3, successRew: 50, 
+var experimentValues = {alpha: 0.005, jumpPen: 0, idleRew: 3, successRew: 50, 
   diePen: -25};
 
 function getRandomInt(min, max) {
