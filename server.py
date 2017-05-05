@@ -78,7 +78,7 @@ def getExpNum():
     f = open("expNumber", "r")
     expNumber = int(f.read())
     f.close()
-    f.open("expNumber", "w")
+    f = open("expNumber", "w")
     f.write(str(expNumber + 1))
     f.close()
     return jsonify({'expNumber': expNumber})
