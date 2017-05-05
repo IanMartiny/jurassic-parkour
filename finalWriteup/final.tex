@@ -99,11 +99,18 @@ directly.
     The agent essentially learns in the following way:
 
     \begin{itemize}
-        \item First, we initialize the agent with a set of parameters including the learning rate $\alpha$, the greedy policy $\epsilon$, the learning algorithm, experience size, etc.
-        \item We then start a loop to keep playing the game. At the beginning of every run, we reset the environment states.
-        \item Based on the state of the current environment, the agent chooses and executes an action.
+        \item First, we initialize the agent with a set of parameters including
+        the learning rate $\alpha$, the greedy policy $\epsilon$, the learning
+        algorithm, experience size, etc.
+        \item We then start a loop to keep playing the game. At the beginning of
+         every run, we reset the environment states.
+        \item Based on the state of the current environment, the agent chooses
+        and executes an action.
         \item Based on the result of the action, a reward/penalty is applied.
-        \item The agent then updates its policy accordingly, and if the T-Rex ``died'', the game restarts. If the agent successfully avoided an obstacle, the environment is updated to reflect the next obstacle, and the process repeats.
+        \item The agent then updates its policy accordingly, and if the T-Rex
+        ``died'', the game restarts. If the agent successfully avoided an
+        obstacle, the environment is updated to reflect the next obstacle, and
+        the process repeats.
     \end{itemize}
 
     The environment states at any point in the game are described by four variables:
@@ -118,6 +125,13 @@ directly.
     Duck. Due to the continuous updating of the environment states, we have
     continuous state features and discrete actions, which led us to using
     REINFORCEjs's \textbf{DQNAgent}.
+
+    The idea of Deep Q-Learning is to utilize a neural network in combination
+    with Q-learning. In particular, the neural network will decide which action
+    to take, and the loss function in the neural network will be updated using
+    Q-learning, since we do not have a nice labelled outcome. The use of
+    Deep Q-Learning then further expands our parameter space, as we need to
+    consider parameters such as the number of neurons in the hidden layer.
 
     Originally the rewards/penalties were assigned such that successfully
     jumping over an obstacle was heavily rewarded (e.g. reward of +50),
@@ -261,7 +275,7 @@ directly.
     We feel that our chosen features (speed, $y$-position of the T-Rex,
     $x$-distance to the nearest obstacle, $y$-position of the nearest obstacle)
     are well-chosen, and do correctly capture the important information for an
-    agent to determine whether to jump or not. 
+    agent to determine whether to jump or not.
 
     However the notion of rewards/penalties is more complicated. After our
     first trial we noticed that the T-Rex was constantly jumping, and we decided
@@ -274,7 +288,7 @@ directly.
     While we feel confident our features our important information for the agent
     to know, the rewards and penalties clearly have a large effect on the
     agent's behavior. There are many options here, from reward/penalty values,
-    to choosing different behaviors to reward/penalize. 
+    to choosing different behaviors to reward/penalize.
 
 \section{Conclusion}
     Ultimately, our goal of teaching an agent to play the T-Rex game was only
@@ -306,7 +320,7 @@ directly.
     effectively has the agent start with trying to emulate its best run, rather
     than randomly searching. Admittedly this does cripple our experiment, but
     even with this small starting value, our experiments take around two hours
-    to reach a ``learned'' state. 
+    to reach a ``learned'' state.
 
 \bibliographystyle{unsrt}
 \bibliography{sources}
