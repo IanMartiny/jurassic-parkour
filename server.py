@@ -1,21 +1,21 @@
 import random
 import os
 from flask import Flask, jsonify, request
-app = Flask(__name__)
+application = Flask(__name__)
 
-@app.route('/')
+@application.route('/')
 def webpage():
-    return app.send_static_file("./index.html")
+    return application.send_static_file("./index.html")
 
-@app.route('/index.js')
+@application.route('/index.js')
 def js():
-    return app.send_static_file("./index.js")
+    return application.send_static_file("./index.js")
 
-@app.route('/index.css')
+@application.route('/index.css')
 def css():
-    return app.send_static_file("./index.css")
+    return application.send_static_file("./index.css")
 
-@app.route('/saveData/', methods=["POST"])
+@application.route('/saveData/', methods=["POST"])
 def saveData():
     trial      = request.form["trial"]
     avg        = request.form["avg"]
@@ -44,7 +44,7 @@ def saveData():
 
     return jsonify({})
 
-@app.route('/updateThresh/', methods=["POST"])
+@application.route('/updateThresh/', methods=["POST"])
 def updateThresh():
     model = request.form["model"]
     if model == "random":
@@ -64,6 +64,13 @@ def increaseThresh(score, thresh):
         return jsonify({'thresh': thresh + (1-thresh)/100})
 
 
-@app.route('/assets/<path:path>')
+@application.route('/assets/<path:path>')
 def sendAssets(path):
-    return app.send_static_file("./assets/" + str(path))
+    return application.send_static_file("./assets/" + str(path))
+
+@application.route('/static/<path:path>')
+def sendStatic(path):
+    return application.send_static_file("./" + str(path))
+
+if __name__== "__main__":
+	application.run(host="0.0.0.0", port="8000")
