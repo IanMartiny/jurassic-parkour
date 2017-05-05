@@ -142,6 +142,23 @@ directly.
     values to attempt to improve the rate of learning, the results of which are
     discussed in the next section.
 
+    Originally the rewards/penalties were assigned such that successfully
+    jumping over an obstacle was heavily rewarded (e.g. reward of +50),
+    ``dying'' was heavily penalized (e.g. penalty of -25), and being idle was
+    very lightly rewarded (e.g. reward of +3). The intention behind this set of
+    rewards and penalties was to avoid obstacles by jumping over them, and to do
+    so without constantly jumping. Furthermore, we experimented with several
+    combinations of these values to attempt to improve the rate of learning, the
+    results of which are discussed in the next section.
+
+    As mentioned above we considered a few ``features'' for our agent to
+    consider, we felt that these best encapsulated the necessary information for
+    the agent to decide when and where to jump---how close (in the $x$
+    direction) the next obstacle was, the height of the obstacle (whether to
+    jump or duck), how fast the game was moving (how far away to start the
+    jump/duck), and the current height of the T-Rex (if they're in the air,
+    they might need to duck to avoid a bird).
+
 \section{Results}
 
     \subsection{Baseline}
@@ -166,7 +183,6 @@ directly.
     T-rex never jumps.
 
     \subsection{Reinforcement Learning}
-
     Our general methodology is discussed in Section~\ref{ssec:RL}, here we will
     discuss how our parameters were set and the results of those experiments.
 
@@ -265,9 +281,25 @@ directly.
     Our future experiments were done to examine the effects of varying
     our parameters in various ranges, though largely unsuccessful.
 
+    We feel that our chosen features (speed, $y$-position of the T-Rex,
+    $x$-distance to the nearest obstacle, $y$-position of the nearest obstacle)
+    are well-chosen, and do correctly capture the important information for an
+    agent to determine whether to jump or not.
+
+    However the notion of rewards/penalties is more complicated. After our
+    first trial we noticed that the T-Rex was constantly jumping, and we decided
+    ourselves that this was ``undesired'' behavior. However the agent decided
+    this due to our assignment of rewards/penalties. During our second
+    experiment with imposing a ``jump penalty'' the agent decided that jumping
+    at all wasn't worth it, and simply collected the ``idle reward'' until it
+    died on the first obstacle.
+
+    While we feel confident our features our important information for the agent
+    to know, the rewards and penalties clearly have a large effect on the
+    agent's behavior. There are many options here, from reward/penalty values,
+    to choosing different behaviors to reward/penalize.
 
 \section{Conclusion}
-
     Ultimately, our goal of teaching an agent to play the T-Rex game was only
     partly successful, in that we were able to teach the agent to gradually
     perform better, but only in a very limited fashion. Additionally, the
@@ -279,6 +311,25 @@ directly.
     a combination of parameters that would optimize the agent's learning. We
     could also incorporate the concept of rewarding or penalizing the action of
     ducking.
+
+    One of the largest issues we ran into with this project was deciding how to
+    reward/penalize the agent. Our goal was, essentially, to have the agent
+    successfully run this obstacle course for as long as possible. So it might
+    seem natural to reward the agent for being alive for various amounts of
+    time. However, if the agent never lives to receive that award, it doesn't
+    know to try and reach it.
+
+    Effectively the agent, after ``finishing'' the learning period, can only
+    emulate the best run that it has experienced. If the agent never stumbles
+    upon a good assignment of parameters that lead to a good run, then it is
+    essentially crippled into doing poorly always.
+
+    One way to combat this, would be to increase the starting value of
+    $\epsilon$ (our experiments started with a value of $0.20$). This
+    effectively has the agent start with trying to emulate its best run, rather
+    than randomly searching. Admittedly this does cripple our experiment, but
+    even with this small starting value, our experiments take around two hours
+    to reach a ``learned'' state.
 
 \bibliographystyle{unsrt}
 \bibliography{sources}
