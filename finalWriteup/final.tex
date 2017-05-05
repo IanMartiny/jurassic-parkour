@@ -5,7 +5,7 @@
 \usepackage{graphicx}
 \usepackage{url}
 
-\title{Jurassic Parkour\footnote{code at 
+\title{Jurassic Parkour\footnote{code at
 https://github.com/IanMartiny/jurassic-parkour}}
 \subtitle{Reinforcement Learning in an HTML5 Browser Game}
 \author{Sebastian Laudenschlager, Ian Martiny}
@@ -26,16 +26,16 @@ utilized the REINFORCEjs library \cite{reinforcejs}, which implements some
 reinforcement learning algorithms such as Deep Q-Learning. The platform we use
 to test the learning algorithm is the Javascript T-Rex game running on a
 locally hosted python server using Flask. We first discuss some of the previous
-related work that this project was built on, followed by a more detailed look 
+related work that this project was built on, followed by a more detailed look
 at the methods and algorithms we used. Subsequently, we present some data from
 several experimental runs and comment on the performance of the agent. Finally,
 we provide some commentary on the successes and failures of this project, as
 well as some ways to improve on this project.
 
 \section{Related Work}
-Our work draws from varying motivations and uses multiple resources we'd like 
+Our work draws from varying motivations and uses multiple resources we'd like
 to acknowledge here. The two course provided sources \cite{rltutorial, rlblog}
-were very helpful in learning the information necessary to use any 
+were very helpful in learning the information necessary to use any
 reinforcement learning techniques.
 
 We examined many different tools to use for our project. Initially we attempted
@@ -93,7 +93,7 @@ directly.
 
     We again keep track of the scores for many runs, and then take the average of the scores.
 
-    \subsection{Reinforcment Learning}\label{ssec:RL}
+    \subsection{Reinforcement Learning}\label{ssec:RL}
     To actually train a computer agent to learn to play the T-Rex game, we used a reinforcement
     learning algorithm, specifically the Deep Q-Learning Algorithm from the REINFORCEjs library.
     The agent essentially learns in the following way:
@@ -118,6 +118,15 @@ directly.
     Duck. Due to the continuous updating of the environment states, we have
     continuous state features and discrete actions, which led us to using
     REINFORCEjs's \textbf{DQNAgent}.
+
+    The rewards / penalties were assigned such that successfully jumping over an
+    obstacle was heavily rewarded (e.g. reward of +50), ``dying'' was heavily
+    penalized (e.g. penalty of -25), and being idle was very lightly rewarded
+    (e.g. reward of +3). The intention behind this set of rewards and penalties
+    was to avoid obstacles by jumping over them, and to do so without constantly
+    jumping. Furthermore, we experimented with several combinations of these
+    values to attempt to improve the rate of learning, the results of which are
+    discussed in the next section.
 
 \section{Results}
 
@@ -149,7 +158,7 @@ directly.
 
     For each experiment we stored data on how the agent performed every 50
     trials, that is, in blocks of 50 trials we recorded how many successful
-    jumps the agent performed, as well as the corresponding value of 
+    jumps the agent performed, as well as the corresponding value of
     $\epsilon$.
 
     Our first experiment set our learning rate $\alpha = 0.005$, and our
@@ -161,14 +170,14 @@ directly.
         \text{success reward} &= 50\\
         \text{die penalty} & = -25
     \end{align*}
-    in short, we lightly rewarded our agent for choosing to be idle (neither 
-    jumping nor ducking), highly rewarded our agent for successfully jumping 
+    in short, we lightly rewarded our agent for choosing to be idle (neither
+    jumping nor ducking), highly rewarded our agent for successfully jumping
     over an obstacle and heavily penalize the agent for dying (running into an
     obstacle). These results are displayed in Figure~\ref{fig:exp1}.
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=\textwidth]{../avgJumps1}    
+        \includegraphics[width=\textwidth]{../avgJumps1}
         \caption{Average number of successful jumps with $\alpha = 0.005$, no
         jump penalty, idle reward = $3$, success reward = $50$, and dying
         penalty = $-25$}
@@ -181,7 +190,7 @@ directly.
     \ref{fig:exp2}.
 
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{../avgJumps2}    
+        \includegraphics[width=\textwidth]{../avgJumps2}
         \caption{Average number of successful jumps with $\alpha = 0.005$,
         jump penalty = $-10$, idle reward = $3$, success reward = $50$, and
         dying penalty = $-25$}
@@ -202,7 +211,7 @@ directly.
     The results of this experiment are displayed in Figure~\ref{fig:exp3}.
 
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{../avgJumps3}    
+        \includegraphics[width=\textwidth]{../avgJumps3}
         \caption{Average number of successful jumps with $\alpha =
         0.8682662725534351$, jump penalty = $-7$, idle reward = $4$, success
         reward = $11$, and dying penalty = $-16$}
@@ -220,7 +229,7 @@ directly.
     The results of this experiment are displayed in Figure~\ref{fig:exp4}.
 
     \begin{figure}[H]
-        \includegraphics[width=\textwidth]{../avgJumps4}    
+        \includegraphics[width=\textwidth]{../avgJumps4}
         \caption{Average number of successful jumps with $\alpha =
         0.6564771414639463$, jump penalty = $-4$, idle reward = $4$, success
         reward = $34$, and dying penalty = $-18$}
@@ -244,6 +253,18 @@ directly.
 
 
 \section{Conclusion}
+
+    Ultimately, our goal of teaching an agent to play the T-Rex game was only
+    partly successful, in that we were able to teach the agent to gradually
+    perform better, but only in a very limited fashion. Additionally, the
+    learning process was quite slow, so that the learning that did happen took
+    quite some time.
+
+    Something that would improve on this project in the future would be to
+    explore the parameter space much more thoroughly, thus allowing us to find
+    a combination of parameters that would optimize the agent's learning. We
+    could also incorporate the concept of rewarding or penalizing the action of
+    ducking.
 
 \bibliographystyle{unsrt}
 \bibliography{sources}
