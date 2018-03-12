@@ -24,7 +24,7 @@ Then create the virtual environment:
 
 Now activate the virtual environment:
 
-`$ . venv/bin/activate`
+`$ source venv/bin/activate`
 
 At any point you can leave the virtual environment with:
 
